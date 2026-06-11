@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import FootballAnimation from "@/components/FootballAnimation";
 import { motion } from "framer-motion";
 import {
   ArrowRight, Check, Users,
@@ -108,7 +109,10 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
+
+      {/* ── Football Strike Animation ── */}
+      <FootballAnimation />
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden bg-white">
@@ -136,7 +140,7 @@ export default function HomePage() {
               className="font-display font-black text-[clamp(52px,8vw,100px)] uppercase leading-[0.88] mb-6 text-slate-900"
             >
               FROM GRASSROOTS<br />
-              <span className="text-primary italic">TO PROFESSIONAL</span><br />
+              <span className="text-shimmer italic">TO PROFESSIONAL</span><br />
               FOOTBALL.
             </motion.h1>
 
@@ -158,8 +162,8 @@ export default function HomePage() {
               <Link href="/signup" className="btn-primary flex items-center gap-2">
                 Book an Assessment <ArrowRight size={16} />
               </Link>
-              <button className="btn-secondary flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+              <button className="btn-secondary group flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_12px_rgba(239,68,68,0.5)]">
                   <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-0.5" />
                 </div>
                 Watch Story
@@ -271,7 +275,7 @@ export default function HomePage() {
                   <span className="text-xs font-black text-slate-300 tracking-widest">{card.num}</span>
                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{card.category}</span>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4 group-hover:bg-red-50 group-hover:border-red-100 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4 group-hover:bg-red-50 group-hover:border-red-100 group-hover:scale-110 group-hover:shadow-[0_0_16px_rgba(239,68,68,0.2)] transition-all duration-300">
                   <card.icon size={18} className="text-slate-400 group-hover:text-primary transition-colors" />
                 </div>
                 <h3 className="font-display font-black text-2xl uppercase text-slate-900 mb-3">{card.title}</h3>
@@ -472,14 +476,14 @@ export default function HomePage() {
           >
             <h2 className="font-display font-black text-[clamp(40px,6vw,80px)] uppercase leading-[0.9] mb-6 text-white">
               OUTCEEDO —<br />
-              <span className="text-primary italic">WHERE FOOTBALL</span><br />
+              <span className="text-shimmer italic">WHERE FOOTBALL</span><br />
               MEETS EXPERTISE
             </h2>
             <div className="flex flex-wrap justify-center gap-4 mt-10">
               <Link href="/signup" className="btn-primary flex items-center gap-2">
                 Join the Platform <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="inline-flex items-center justify-center gap-2 px-7 h-[52px] bg-white/10 text-white font-bold text-sm uppercase tracking-[0.05em] rounded-xl border border-white/20 hover:bg-white/15 transition-all">
+              <Link href="/contact" className="inline-flex items-center justify-center gap-2 px-7 h-[52px] bg-white/10 text-white font-bold text-sm uppercase tracking-[0.05em] rounded-xl border border-white/20 hover:bg-white/15 hover:border-primary/60 hover:-translate-y-0.5 hover:shadow-[0_0_28px_rgba(239,68,68,0.3)] transition-all duration-300">
                 Get in Touch
               </Link>
             </div>

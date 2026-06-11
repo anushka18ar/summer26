@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Scroll-Driven Football Strike</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        :root {
+            --stadium-blue: #0a192f;
+            --floodlight-glow: rgba(135, 206, 250, 0.4);
+            --gold: #ffcc00;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #030712;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        /* Container keeping the cinematic viewport fixed */
+        .animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* --- STADIUM BACKGROUND LAYERS --- */
+        .stadium-bg {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            background: radial-gradient(circle at 50% 20%, #1e3a8a 0%, #020617 80%);
+            z-index: 1;
+        }
+
+        .floodlights {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 40%;
+            background: radial-gradient(circle at 20% 0%, var(--floodlight-glow) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 0%, var(--floodlight-glow) 0%, transparent 50%);
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .crowd-blurred {
+            position: absolute;
+            bottom: 25%;
+            width: 100%;
+            height: 35%;
+            background: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 8px 8px;
+            filter: blur(3px);
+            opacity: 0.4;
+            z-index: 2;
+        }
+
+        .pitch {
+            position: absolute;
+            bottom: 0;
+            width: 120%;
+            height: 35%;
+            background: linear-gradient(to bottom, #14532d 0%, #052e16 100%);
+            transform: rotateX(20deg);
+            transform-origin: bottom center;
+            z-index: 3;
+            border-top: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .goal {
+            position: absolute;
+            bottom: 30%;
+            left: 15%;
+            width: 120px;
+            height: 70px;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            border-bottom: none;
+            background: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 6px 6px;
+            z-index: 4;
+            transform-origin: bottom center;
+        }
+
+        /* --- INTERACTIVE CHARACTERS & OBJECTS --- */
+        .player-wrapper {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            width: 450px;
+            height: 650px;
+            z-index: 10;
+            transform-origin: bottom right;
+        }
+
+        /* SVG Construction of Player for smooth custom keyframing */
+        .player-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ball {
+            position: absolute;
+            bottom: 8%;
+            right: 28%;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #ccc 40%, #000 100%);
+            border-radius: 50%;
+            box-shadow: 0 15px 20px rgba(0,0,0,0.6), inset -10px -10px 20px rgba(0,0,0,0.8);
+            z-index: 11;
+            transform-origin: center;
+        }
+
+        /* Pentagons on the ball */
+        .ball::before {
+            content: '⚽';
+            font-size: 73px;
+            position: absolute;
+            top: -11px;
+            left: -2px;
+            opacity: 0.35;
+        }
+
+        /* --- VISUAL EFFECTS --- */
+        .impact-flash {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #fff 0%, #ff0 40%, transparent 70%);
+            border-radius: 50%;
+            z-index: 12;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        .speed-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 8;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .grass-particles {
+            position: absolute;
+            z-index: 12;
+            pointer-events: none;
+        }
+
+        /* --- TEXT OVERLAYS --- */
+        .cinematic-text {
+            position: absolute;
+            font-size: 7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 40px var(--stadium-blue);
+            opacity: 0;
+            z-index: 20;
+            letter-spacing: 5px;
+            pointer-events: none;
+        }
+
+        .goal-text {
+            color: var(--gold);
+            font-size: 10rem;
+            scale: 0.3;
+            text-shadow: 0 0 30px #f59e0b;
+        }
+
+        /* --- HUD & UI --- */
+        .scroll-indicator {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 200px;
+            width: 4px;
+            background: rgba(255,255,255,0.2);
+            z-index: 100;
+            border-radius: 2px;
+        }
+
+        .scroll-progress-bar {
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to bottom, #3b82f6, var(--gold));
+            border-radius: 2px;
+        }
+
+        .scroll-prompt {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: monospace;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+            z-index: 100;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.9; }
+        }
+
+        /* Creates scroll room for ScrollTrigger */
+        .scroll-space {
+            height: 600vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-indicator">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+    <div class="scroll-prompt">↓ Scroll Down to Kick ↓</div>
+
+    <div class="animation-container" id="stage">
+        
+        <div class="stadium-bg"></div>
+        <div class="floodlights" id="lights"></div>
+        <div class="crowd-blurred"></div>
+        <div class="pitch" id="pitch"></div>
+        <div class="goal" id="goalNet"></div>
+
+        <svg class="speed-lines" id="speedLines" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+            <line x1="15%" y1="35%" x2="72%" y2="85%" stroke="white" stroke-width="2" opacity="0.6"/>
+            <line x1="10%" y1="20%" x2="72%" y2="85%" stroke="#ffcc00" stroke-width="1.5" opacity="0.4"/>
+            <line x1="20%" y1="50%" x2="72%" y2="85%" stroke="white" stroke-width="3" opacity="0.5"/>
+            <line x1="5%" y1="40%" x2="72%" y2="85%" stroke="lightblue" stroke-width="2" opacity="0.6"/>
+        </svg>
+
+        <div class="impact-flash" id="flash"></div>
+
+        <div class="ball" id="soccerBall"></div>
+
+        <div class="player-wrapper" id="player">
+            <svg class="player-svg" viewBox="0 0 400 600">
+                <g id="playerBody">
+                    <path d="M 220 100 L 320 130 L 300 280 L 210 260 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+                    <path d="M 290 120 L 320 130 L 300 240 Z" fill="#94a3b8" opacity="0.4"/> <path d="M 215 260 L 240 450 L 260 560 L 220 570 L 200 450 Z" fill="#0f172a"/> 
+                    
+                    <path d="M 210 250 L 305 275 L 290 380 L 230 380 Z" fill="#1e293b"/>
+                    
+                    <g id="kickingLeg" transform-origin="250 270">
+                        <path d="M 245 270 L 295 280 L 260 410 L 210 390 Z" fill="#1e293b"/>
+                        <path id="calf" d="M 225 400 L 260 410 L 190 540 L 160 515 Z" fill="#f8fafc" stroke="#e2e8f0"/>
+                        <path id="cleat" d="M 160 515 L 195 545 L 140 565 L 125 535 Z" fill="#0f172a"/>
+                    </g>
+
+                    <path d="M 315 125 L 360 180 L 320 220 L 300 200" fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M 315 125 L 360 180 L 320 220 L 300 200" fill="none" stroke="#e2e8f0" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="cinematic-text" id="textReady">READY</div>
+        <div class="cinematic-text" id="textStrike">STRIKE!</div>
+        <div class="cinematic-text goal-text" id="textGoal">GOAL!</div>
+    </div>
+
+    <div class="scroll-space"></div>
+
+    <script>
+        // Ensure GSAP plugins are operational
+        gsap.registerPlugin(ScrollTrigger);
+
+        // DOM elements
+        const soccerBall = document.getElementById('soccerBall');
+        const player = document.getElementById('player');
+        const kickingLeg = document.getElementById('kickingLeg');
+        const flash = document.getElementById('flash');
+        const speedLines = document.getElementById('speedLines');
+        const goalNet = document.getElementById('goalNet');
+        const stage = document.getElementById('stage');
+        const lights = document.getElementById('lights');
+        const progressBar = document.getElementById('progressBar');
+
+        const textReady = document.getElementById('textReady');
+        const textStrike = document.getElementById('textStrike');
+        const textGoal = document.getElementById('textGoal');
+
+        // Dynamic Setup / Placements
+        const ballInitX = soccerBall.offsetLeft + (soccerBall.offsetWidth / 2);
+        const ballInitY = soccerBall.offsetTop + (soccerBall.offsetHeight / 2);
+        flash.style.left = `${ballInitX}px`;
+        flash.style.top = `${ballInitY}px`;
+
+        // master timeline synced to the absolute scroll position
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".scroll-space",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1, // Smooth scrolling catch-up
+                onUpdate: (self) => {
+                    // Update progress bar HUD
+                    progressBar.style.height = `${self.progress * 100}%`;
+                }
+            }
+        });
+
+        // --- STAGE 1: 0% - 20% (Hero Shot, Ambient Breathing) ---
+        tl.to(lights, { opacity: 0.5, repeat: 3, yoyo: true, duration: 0.05 })
+          .to(textReady, { opacity: 0.8, scale: 1.1, duration: 0.1 }, 0)
+          .to(textReady, { opacity: 0, scale: 1.3, duration: 0.05 }, 0.18);
+
+        // --- STAGE 2: 20% - 45% (Camera Pull Back & Wind-up) ---
+        tl.to(stage, { scale: 0.75, x: 50, y: -20, ease: "power1.inOut", duration: 0.25 }, 0.20)
+          // Player lifts leg back to wind up
+          .to(kickingLeg, { rotation: -45, x: 40, y: -50, ease: "power2.inOut", duration: 0.25 }, 0.20)
+          // Roll ball slightly backward tracking the foot's initial windup drag
+          .to(soccerBall, { x: 15, rotation: 45, duration: 0.15 }, 0.20);
+
+        // --- STAGE 3: 45% - 55% (Impact Moment) ---
+        // Leg swings aggressively forward
+        tl.to(kickingLeg, { rotation: 25, x: -30, y: 15, ease: "back.in(1)", duration: 0.1 }, 0.45)
+          // Radial Flashburst at exact moment of connection (50%)
+          .to(flash, { opacity: 1, scale: 2.5, duration: 0.02 }, 0.50)
+          .to(flash, { opacity: 0, scale: 4, duration: 0.04 }, 0.52)
+          // Camera Shake
+          .to(stage, { x: "+=15", y: "-=10", duration: 0.02, yoyo: true, repeat: 3 }, 0.50)
+          // "STRIKE" overlay bursts
+          .to(textStrike, { opacity: 1, scale: 1.2, duration: 0.05 }, 0.50)
+          .to(textStrike, { opacity: 0, scale: 0.7, duration: 0.05 }, 0.55);
+
+        // --- STAGE 4: 55% - 85% (Ball Flight, Rotation along Curve & Speed Lines) ---
+        tl.to(soccerBall, { 
+            // Parabolic Arc Flight Path down toward the bottom left goal corner
+            x: -560, 
+            y: -110, 
+            scale: 0.35, // Shrinking as it moves deep into background
+            rotation: -1080, // Rapid structural spin
+            ease: "power1.out",
+            duration: 0.30 
+        }, 0.52)
+        // Enable speed streaks
+        .to(speedLines, { opacity: 1, duration: 0.05 }, 0.52)
+        .to(speedLines, { opacity: 0, duration: 0.1 }, 0.75)
+        // Camera tracks field laterally following the motion blur zone
+        .to(stage, { x: 180, scale: 0.9, ease: "power1.inOut", duration: 0.30 }, 0.52);
+
+        // --- STAGE 5: 85% - 100% (Back of Net & Goal Burst Celebration) ---
+        tl.to(goalNet, { scaleX: 1.15, scaleY: 1.05, skewX: -5, ease: "elastic.out(1, 0.3)", duration: 0.1 }, 0.82)
+          .to(textGoal, { opacity: 1, scale: 1, ease: "bounce.out", duration: 0.12 }, 0.85)
+          // Dramatic camera crash zoom right into the net celebration center
+          .to(stage, { scale: 1.4, x: 450, y: 150, duration: 0.15, ease: "power2.out" }, 0.85);
+
+    </script>
+</body>
+</html>
