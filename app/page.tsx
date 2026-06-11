@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import FootballAnimation from "@/components/FootballAnimation";
+import Hero from "@/components/home/Hero";
 import { motion } from "framer-motion";
 import {
   ArrowRight, Check, Users,
@@ -115,83 +116,7 @@ export default function HomePage() {
       <FootballAnimation />
 
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden bg-white">
-        <div className="absolute inset-0 grid-bg opacity-50 pointer-events-none" />
-        <div className="absolute top-1/4 -right-32 w-[500px] h-[500px] bg-red-50 rounded-full opacity-60 blur-3xl pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-6"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold uppercase tracking-widest text-slate-600 shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Outdo Your Sport to Succeed
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display font-black text-[clamp(52px,8vw,100px)] uppercase leading-[0.88] mb-6 text-slate-900"
-            >
-              FROM GRASSROOTS<br />
-              <span className="text-shimmer italic">TO PROFESSIONAL</span><br />
-              FOOTBALL.
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-slate-600 text-xl leading-relaxed max-w-xl mb-10"
-            >
-              The premier ecosystem connecting rising football stars with world-class coaches, scouts, and performance experts.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-wrap gap-4 mb-16"
-            >
-              <Link href="/signup" className="btn-primary flex items-center gap-2">
-                Book an Assessment <ArrowRight size={16} />
-              </Link>
-              <button className="btn-secondary group flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_12px_rgba(239,68,68,0.5)]">
-                  <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-0.5" />
-                </div>
-                Watch Story
-              </button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap gap-3"
-            >
-              {tickerItems.map((label, i) => (
-                <motion.span
-                  key={label}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 + i * 0.08 }}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-semibold text-slate-600 shadow-sm"
-                >
-                  <Star size={10} className="text-primary" fill="currentColor" />
-                  {label}
-                </motion.span>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       {/* ── Ticker ── */}
       <div className="bg-slate-50 border-y border-slate-200 py-4 overflow-hidden">
