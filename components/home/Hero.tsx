@@ -171,40 +171,25 @@ export default function Hero() {
                 transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
                 className="relative z-10"
               >
-                {/* Perspective container */}
-                <div style={{ perspective: "1000px", perspectiveOrigin: "center center" }}>
-                  {/* Rotation wrapper — rotateZ only; rotateX adds cinematic tilt */}
-                  <motion.div
-                    style={{
-                      rotateZ: totalRotation,
-                      rotateX: "15deg",
-                      transformStyle: "preserve-3d",
-                      filter:
-                        "drop-shadow(0px 40px 60px rgba(0,0,0,0.35)) drop-shadow(0px 15px 25px rgba(0,0,0,0.25))",
-                    }}
-                    className="relative"
-                  >
-                    <Image
-                      src="/ba.png"
-                      alt="Soccer ball"
-                      width={420}
-                      height={420}
-                      className="w-[280px] h-[280px] lg:w-[420px] lg:h-[420px] object-contain select-none"
-                      draggable={false}
-                      priority
-                    />
-
-                    {/* Static lighting overlay — stays fixed over rotating ball,
-                        creating the illusion of a real light source top-left */}
-                    <div
-                      className="absolute inset-0 rounded-full pointer-events-none z-20"
-                      style={{
-                        background:
-                          "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.45) 0%, transparent 45%, rgba(0,0,0,0.25) 100%)",
-                      }}
-                    />
-                  </motion.div>
-                </div>
+                {/* Rotation wrapper — rotateZ only, directional shadow (no halo) */}
+                <motion.div
+                  style={{
+                    rotateZ: totalRotation,
+                    backfaceVisibility: "hidden",
+                    filter: "drop-shadow(8px 16px 12px rgba(0,0,0,0.28)) drop-shadow(0px 4px 6px rgba(0,0,0,0.18))",
+                  }}
+                  className="relative w-[280px] h-[280px] lg:w-[420px] lg:h-[420px]"
+                >
+                  <Image
+                    src="/ba.png"
+                    alt="Soccer ball"
+                    width={420}
+                    height={420}
+                    className="w-full h-full object-contain select-none"
+                    draggable={false}
+                    priority
+                  />
+                </motion.div>
               </motion.div>
 
               {/* Ground shadow — scale/opacity inverse to float (ball up → shadow shrinks) */}

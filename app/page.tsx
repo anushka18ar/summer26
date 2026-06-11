@@ -98,6 +98,12 @@ export default function HomePage() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const counterRef = useRef<HTMLDivElement>(null);
 
+  const trackCardGlow = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+  };
+
   useEffect(() => {
     if (!counterRef.current) return;
     const ctx = gsap.context(() => {
@@ -193,20 +199,20 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
-                className="group bg-white rounded-2xl border border-slate-200 p-8 hover:border-red-200 hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
+                onMouseMove={trackCardGlow}
+                className="card-futuristic group bg-white rounded-2xl border border-slate-200 p-8 flex flex-col"
               >
-                <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity rounded-l-2xl" />
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-black text-slate-300 tracking-widest">{card.num}</span>
+                  <span className="text-xs font-black text-slate-300 tracking-widest group-hover:text-primary/50 transition-colors">{card.num}</span>
                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{card.category}</span>
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4 group-hover:bg-red-50 group-hover:border-red-100 group-hover:scale-110 group-hover:shadow-[0_0_16px_rgba(239,68,68,0.2)] transition-all duration-300">
                   <card.icon size={18} className="text-slate-400 group-hover:text-primary transition-colors" />
                 </div>
                 <h3 className="font-display font-black text-2xl uppercase text-slate-900 mb-3">{card.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6">{card.desc}</p>
-                <Link href="/signup" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 group-hover:text-primary transition-colors">
-                  Discover More <ChevronRight size={12} />
+                <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1">{card.desc}</p>
+                <Link href="/signup" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 group-hover:text-primary transition-colors mt-auto">
+                  Discover More <ChevronRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
             ))}

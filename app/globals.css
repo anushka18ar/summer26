@@ -165,6 +165,45 @@ body {
   color: #D97706;
 }
 
+/* ─── Futuristic cards (cursor spotlight + gradient border ring) ─── */
+.card-futuristic {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s;
+}
+/* red spotlight that follows the cursor (--mx/--my set from JS) */
+.card-futuristic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(239, 68, 68, 0.09), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.card-futuristic:hover::before { opacity: 1; }
+/* gradient ring that lights up the border */
+.card-futuristic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.75), rgba(239, 68, 68, 0.08) 40%, rgba(239, 68, 68, 0.08) 60%, rgba(240, 165, 0, 0.55));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.card-futuristic:hover::after { opacity: 1; }
+.card-futuristic:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08), 0 0 40px rgba(239, 68, 68, 0.14);
+}
+
 /* ─── Section label (red dash + uppercase) ─── */
 .section-label {
   display: inline-flex;
