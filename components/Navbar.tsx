@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
@@ -31,20 +32,22 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm"
-            : "bg-white/80 backdrop-blur-md"
+            ? "bg-[#0a0a0b]/95 backdrop-blur-xl shadow-[0_1px_20px_rgba(0,0,0,0.5)]"
+            : "bg-[#0a0a0b]/80 backdrop-blur-md"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="font-display font-black text-white text-sm leading-none">O</span>
-              </div>
-              <span className="font-display font-black text-lg text-slate-900 tracking-tight">
-                OUT<span className="text-primary">CEEDO</span>
-              </span>
+            <Link href="/" className="flex items-center shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Outceedo"
+                width={140}
+                height={40}
+                className="h-9 w-auto object-contain"
+                priority
+              />
             </Link>
 
             {/* Desktop nav */}
@@ -57,8 +60,8 @@ export default function Navbar() {
                     href={href}
                     className={`relative px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
                       active
-                        ? "text-primary bg-red-50"
-                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                        ? "text-primary bg-red-500/10"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     {label}
@@ -74,11 +77,14 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <Link
                 href="/login"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors px-3 py-2"
+                className="text-sm font-semibold text-slate-400 hover:text-white transition-colors px-3 py-2"
               >
                 Login
               </Link>
-              <Link href="/signup" className="btn-primary !h-10 !px-5 !text-xs">
+              <Link
+                href="/signup"
+                className="btn-primary !h-10 !px-5 !text-xs focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0b]"
+              >
                 Get Started
               </Link>
             </div>
@@ -86,7 +92,7 @@ export default function Navbar() {
             {/* Mobile hamburger */}
             <button
               onClick={() => setOpen(!open)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
               aria-label={open ? "Close menu" : "Open menu"}
             >
               {open ? <X size={20} /> : <Menu size={20} />}
@@ -97,7 +103,7 @@ export default function Navbar() {
 
       {/* Mobile menu overlay */}
       {open && (
-        <div className="fixed inset-0 z-40 bg-white pt-16 lg:hidden">
+        <div className="fixed inset-0 z-40 bg-[#0a0a0b] pt-16 lg:hidden border-b border-white/5">
           <nav className="flex flex-col p-6 gap-1">
             {navLinks.map(({ href, label }) => {
               const active = pathname === href;
@@ -105,8 +111,8 @@ export default function Navbar() {
                 <Link
                   key={href}
                   href={href}
-                  className={`px-4 py-3.5 rounded-xl text-base font-semibold border-b border-slate-100 transition-colors ${
-                    active ? "text-primary" : "text-slate-700"
+                  className={`px-4 py-3.5 rounded-xl text-base font-semibold border-b border-white/5 transition-colors ${
+                    active ? "text-primary" : "text-slate-400 hover:text-white"
                   }`}
                 >
                   {label}

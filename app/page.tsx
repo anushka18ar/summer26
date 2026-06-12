@@ -116,7 +116,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="bg-white">
+    <div style={{ background: "#0a0a0b" }}>
 
       {/* ── Football Strike Animation ── */}
       <FootballAnimation />
@@ -125,10 +125,10 @@ export default function HomePage() {
       <Hero />
 
       {/* ── Ticker ── */}
-      <div className="bg-slate-50 border-y border-slate-200 py-4 overflow-hidden">
+      <div className="py-4 overflow-hidden" style={{ background: "#0a0a0b" }}>
         <div className="ticker-track">
           {[...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
-            <span key={i} className="flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-slate-300 shrink-0 px-8">
+            <span key={i} className="flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-white/30 shrink-0 px-8">
               {item}
               <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
             </span>
@@ -137,7 +137,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Stats bar ── */}
-      <div ref={counterRef} className="bg-white border-b border-slate-100 py-12">
+      <div ref={counterRef} className="py-12" style={{ background: "#0a0a0b" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -147,7 +147,7 @@ export default function HomePage() {
               { value: "120K+", label: "Followers" },
             ].map((s) => (
               <div key={s.label} className="stat-num text-center">
-                <div className="font-display font-black text-4xl text-slate-900 mb-1">{s.value}</div>
+                <div className="font-display font-black text-4xl text-white mb-1">{s.value}</div>
                 <div className="text-xs text-primary font-bold uppercase tracking-widest">{s.label}</div>
               </div>
             ))}
@@ -156,7 +156,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Ecosystem ── */}
-      <section className="relative py-24 lg:py-32 bg-white">
+      <section className="relative py-24 lg:py-32" style={{ background: "#111114" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 mb-16 items-end">
             <div>
@@ -174,7 +174,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display font-black text-[clamp(40px,5.5vw,72px)] uppercase leading-[0.9] text-slate-900"
+                className="font-display font-black text-[clamp(40px,5.5vw,72px)] uppercase leading-[0.9] text-white"
               >
                 BUILT FOR THE<br />
                 <span className="text-primary italic">ENTIRE ECOSYSTEM.</span>
@@ -185,7 +185,7 @@ export default function HomePage() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-slate-600 text-lg leading-relaxed lg:pb-2"
+              className="text-slate-400 text-lg leading-relaxed lg:pb-2"
             >
               Outceedo connects every stakeholder in the modern game through a unified, data-driven professional platform.
             </motion.p>
@@ -200,18 +200,19 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
                 onMouseMove={trackCardGlow}
-                className="card-futuristic group bg-white rounded-2xl border border-slate-200 p-8 flex flex-col"
+                className="card-futuristic group rounded-2xl border border-white/5 p-8 flex flex-col"
+                style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-black text-slate-300 tracking-widest group-hover:text-primary/50 transition-colors">{card.num}</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{card.category}</span>
+                  <span className="text-xs font-black text-white/20 tracking-widest group-hover:text-primary/50 transition-colors">{card.num}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-primary/70">{card.category}</span>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4 group-hover:bg-red-50 group-hover:border-red-100 group-hover:scale-110 group-hover:shadow-[0_0_16px_rgba(239,68,68,0.2)] transition-all duration-300">
-                  <card.icon size={18} className="text-slate-400 group-hover:text-primary transition-colors" />
+                <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4 group-hover:bg-red-500/20 group-hover:border-red-500/30 group-hover:scale-110 group-hover:shadow-[0_0_16px_rgba(239,68,68,0.2)] transition-all duration-300">
+                  <card.icon size={18} className="text-primary transition-colors" />
                 </div>
-                <h3 className="font-display font-black text-2xl uppercase text-slate-900 mb-3">{card.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1">{card.desc}</p>
-                <Link href="/signup" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 group-hover:text-primary transition-colors mt-auto">
+                <h3 className="font-display font-black text-2xl uppercase text-white mb-3">{card.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-1">{card.desc}</p>
+                <Link href="/signup" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-primary transition-colors mt-auto">
                   Discover More <ChevronRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
@@ -221,9 +222,9 @@ export default function HomePage() {
       </section>
 
       {/* ── Process ── */}
-      <section className="relative py-24 lg:py-32 bg-slate-50 overflow-hidden">
-        <div className="absolute inset-0 grid-bg opacity-40" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-24 lg:py-32 overflow-hidden" style={{ background: "#0a0a0b" }}>
+        <div className="absolute inset-0 grid-bg opacity-100" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -238,17 +239,17 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="font-display font-black text-[clamp(40px,5.5vw,72px)] uppercase leading-[0.9] text-slate-900 mb-4"
+              className="font-display font-black text-[clamp(40px,5.5vw,72px)] uppercase leading-[0.9] text-white mb-4"
             >
               PATH TO THE <span className="text-primary italic">PROS.</span>
             </motion.h2>
-            <p className="text-slate-600 max-w-xl mx-auto">
+            <p className="text-slate-400 max-w-xl mx-auto">
               A simplified, data-driven journey from the local pitch to the international stage.
             </p>
           </div>
 
           <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-slate-200 z-0" />
+            <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-white/8 z-0" />
             {steps.map((step, i) => (
               <motion.div
                 key={step.num}
@@ -258,11 +259,14 @@ export default function HomePage() {
                 transition={{ delay: i * 0.1 }}
                 className="relative z-10 text-center"
               >
-                <div className="w-20 h-20 rounded-2xl bg-white border-2 border-red-100 flex items-center justify-center mx-auto mb-6 group hover:bg-primary hover:border-primary transition-all duration-300 cursor-default">
-                  <span className="font-display font-black text-2xl text-slate-300 group-hover:text-white transition-colors">{step.num}</span>
+                <div
+                  className="w-20 h-20 rounded-2xl border-2 border-primary/30 flex items-center justify-center mx-auto mb-6 group hover:bg-primary hover:border-primary transition-all duration-300 cursor-default"
+                  style={{ background: "#15151a" }}
+                >
+                  <span className="font-display font-black text-2xl text-primary group-hover:text-white transition-colors">{step.num}</span>
                 </div>
-                <h3 className="font-display font-black text-xl uppercase text-slate-900 mb-3">{step.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-4">{step.desc}</p>
+                <h3 className="font-display font-black text-xl uppercase text-white mb-3">{step.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed mb-4">{step.desc}</p>
                 {step.badge && <span className="badge badge-red text-[10px]">{step.badge}</span>}
               </motion.div>
             ))}
@@ -283,7 +287,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Pricing ── */}
-      <section className="relative py-24 lg:py-32 bg-white">
+      <section className="relative py-24 lg:py-32" style={{ background: "#111114" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <motion.div
@@ -299,56 +303,63 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="font-display font-black text-[clamp(40px,5.5vw,72px)] uppercase leading-[0.9] text-slate-900 mb-4"
+              className="font-display font-black text-[clamp(40px,5.5vw,72px)] uppercase leading-[0.9] text-white mb-4"
             >
               CHOOSE YOUR <span className="text-primary italic">LEVEL.</span>
             </motion.h2>
-            <p className="text-slate-600 max-w-lg mx-auto">
+            <p className="text-slate-400 max-w-lg mx-auto">
               Start your journey for free or unlock the full tactical ecosystem to accelerate your professional career.
             </p>
           </div>
 
           {/* Toggle */}
-          <div className="flex items-center justify-center gap-4 mb-12">
-            <span className={`text-sm font-bold ${billing === "monthly" ? "text-slate-900" : "text-slate-400"}`}>Monthly</span>
+          <div className="flex items-center justify-center gap-6 mb-12">
+            <span className={`text-sm font-bold transition-colors ${billing === "monthly" ? "text-white" : "text-slate-500"}`}>Monthly</span>
             <button
               onClick={() => setBilling(billing === "monthly" ? "annual" : "monthly")}
-              className={`w-12 h-6 rounded-full transition-colors relative ${billing === "annual" ? "bg-primary" : "bg-slate-200"}`}
+              aria-checked={billing === "annual"}
+              role="switch"
+              className={`relative w-14 h-7 rounded-full transition-colors duration-300 overflow-hidden shrink-0 ${billing === "annual" ? "bg-primary" : "bg-white/10 border border-white/15"}`}
             >
-              <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${billing === "annual" ? "translate-x-7" : "translate-x-1"}`} />
+              <span
+                className={`absolute top-1 left-1 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-300 ${billing === "annual" ? "translate-x-7" : "translate-x-0"}`}
+              />
             </button>
-            <span className={`text-sm font-bold flex items-center gap-2 ${billing === "annual" ? "text-slate-900" : "text-slate-400"}`}>
+            <span className={`text-sm font-bold flex items-center gap-2 transition-colors ${billing === "annual" ? "text-white" : "text-slate-500"}`}>
               Annually <span className="badge badge-red">SAVE 17%</span>
             </span>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
             {/* Basic */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl border border-slate-200 p-8 shadow-card"
+              className="rounded-2xl border border-white/10 p-8 flex flex-col"
+              style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
             >
               <div className="mb-6">
-                <h3 className="font-display font-black text-2xl uppercase text-slate-900">Basic</h3>
+                <h3 className="font-display font-black text-2xl uppercase text-white">Basic</h3>
                 <p className="text-slate-500 text-sm">Get Started Free</p>
               </div>
               <div className="mb-6">
-                <span className="font-display font-black text-5xl text-slate-900">£0</span>
+                <span className="font-display font-black text-5xl text-white">£0</span>
                 <span className="text-slate-500 text-sm">/mo</span>
-                <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Free Forever</div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">Free Forever</div>
               </div>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 mb-8 flex-1">
                 {basicFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-slate-600">
-                    <div className="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
-                      <Check size={10} className="text-slate-400" />
+                  <li key={f} className="flex items-center gap-3 text-sm text-white/30 line-through">
+                    <div className="w-5 h-5 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                      <Check size={10} className="text-white/30" />
                     </div>
                     {f}
                   </li>
                 ))}
               </ul>
+              {/* Spacer to match Premium's helper text height */}
+              <p className="text-center text-xs text-transparent mt-0 mb-3 select-none">placeholder</p>
               <Link href="/signup" className="btn-secondary w-full justify-center flex">Get Started</Link>
             </motion.div>
 
@@ -358,28 +369,32 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl border-2 border-primary p-8 relative"
-              style={{ boxShadow: "var(--shadow-red-glow)" }}
+              className="rounded-2xl border-2 border-primary/50 p-8 flex flex-col"
+              style={{
+                background: "linear-gradient(135deg, #1a0c0e 0%, #15151a 100%)",
+                boxShadow: "0 0 60px rgba(239,68,68,0.1), 0 24px 48px rgba(0,0,0,0.4)",
+              }}
             >
-              <div className="absolute -top-3 right-6">
-                <span className="badge badge-red">BEST VALUE</span>
-              </div>
-              <div className="mb-6">
-                <h3 className="font-display font-black text-2xl uppercase text-slate-900">Premium</h3>
-                <p className="text-slate-500 text-sm">Unlock Everything</p>
+              {/* BEST VALUE inside the card */}
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="font-display font-black text-2xl uppercase text-white">Premium</h3>
+                  <p className="text-slate-500 text-sm">Unlock Everything</p>
+                </div>
+                <span className="badge badge-red shrink-0">BEST VALUE</span>
               </div>
               <div className="mb-6">
                 <span className="font-display font-black text-5xl text-primary">
                   £{billing === "monthly" ? "10" : "100"}
                 </span>
                 <span className="text-slate-500 text-sm">/mo</span>
-                <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
                   {billing === "monthly" ? "Billed Monthly" : "Billed Annually"}
                 </div>
               </div>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 mb-8 flex-1">
                 {premiumFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-slate-700">
+                  <li key={f} className="flex items-center gap-3 text-sm text-white">
                     <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0">
                       <Check size={10} className="text-white" />
                     </div>
@@ -387,17 +402,23 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
+              <p className="text-center text-xs text-slate-500 mb-3">Full Access to All Features</p>
               <Link href="/signup" className="btn-primary w-full justify-center flex">Upgrade to Premium</Link>
-              <p className="text-center text-xs text-slate-400 mt-3">Full Access to All Features</p>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* ── CTA ── */}
-      <section className="relative py-24 lg:py-32 bg-slate-900 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(239,68,68,0.10) 0%, transparent 65%)" }} />
-        <div className="absolute inset-0 grid-bg opacity-20" />
+      <section
+        className="relative py-24 lg:py-32 overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, #c0392b 0%, #EF4444 50%, #e05252 100%)",
+          boxShadow: "0 -20px 60px rgba(239,68,68,0.3)",
+        }}
+      >
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.15) 0%, transparent 65%)" }} />
+        <div className="absolute inset-0 grid-bg opacity-10" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -407,14 +428,17 @@ export default function HomePage() {
           >
             <h2 className="font-display font-black text-[clamp(40px,6vw,80px)] uppercase leading-[0.9] mb-6 text-white">
               OUTCEEDO —<br />
-              <span className="text-shimmer italic">WHERE FOOTBALL</span><br />
+              <span className="text-shimmer-dark italic">WHERE FOOTBALL</span><br />
               MEETS EXPERTISE
             </h2>
             <div className="flex flex-wrap justify-center gap-4 mt-10">
-              <Link href="/signup" className="btn-primary flex items-center gap-2">
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 px-7 h-[52px] bg-white text-red-500 font-bold text-sm uppercase tracking-[0.05em] rounded-xl hover:bg-gray-100 hover:-translate-y-0.5 transition-all duration-200"
+              >
                 Join the Platform <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="inline-flex items-center justify-center gap-2 px-7 h-[52px] bg-white/10 text-white font-bold text-sm uppercase tracking-[0.05em] rounded-xl border border-white/20 hover:bg-white/15 hover:border-primary/60 hover:-translate-y-0.5 hover:shadow-[0_0_28px_rgba(239,68,68,0.3)] transition-all duration-300">
+              <Link href="/contact" className="inline-flex items-center justify-center gap-2 px-7 h-[52px] bg-white/10 text-white font-bold text-sm uppercase tracking-[0.05em] rounded-xl border border-white/30 hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-200">
                 Get in Touch
               </Link>
             </div>

@@ -23,7 +23,7 @@ export type BoardMember = {
   name: string;
   role: string;
   image: string;
-  bio: string;
+  strategicProfile: string;
 };
 
 export const experts: Expert[] = [
@@ -245,15 +245,75 @@ export const experts: Expert[] = [
 
 export const boardMembers: BoardMember[] = [
   {
-    name: "Arun Muppana",
-    role: "Co-Founder & CEO",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
-    bio: "Passionate football fan and entrepreneur, Arun co-founded Outceedo in 2026 with a vision to revolutionise how football talent is discovered and developed globally.",
+    name: "Sylvie Lederlé",
+    role: "Brand Partnerships Leader",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80",
+    strategicProfile:
+      "A senior brand partnerships leader with 20+ years of experience across major international sports properties. Expert in sponsorship, rights valuation, and KPI frameworks.",
   },
   {
-    name: "Karthik Reddy",
-    role: "Co-Founder & CTO",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80",
-    bio: "Technology visionary and football enthusiast, Karthik leads the technical architecture of the Outceedo platform, building the infrastructure that connects players and experts worldwide.",
+    name: "Marco Garcia",
+    role: "Football Advisor",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80",
+    strategicProfile:
+      "A Spanish-Chilean football advisor and high-performance specialist with 11+ years of international experience across youth development, elite talent identification, and sports management.",
+  },
+  {
+    name: "Katarina Cosic",
+    role: "Sport Lawyer & FIFA Agent",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80",
+    strategicProfile:
+      "Has 14+ years' experience as a Sport Lawyer and licensed FIFA Football Agent providing legal and strategic representation within the football industry.",
+  },
+  {
+    name: "Keith Hackett",
+    role: "Former Premier League Referee",
+    image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&q=80",
+    strategicProfile:
+      "English former football referee, who began refereeing in 1960. He is counted amongst the top 100 referees of all time by the IFFHS.",
+  },
+];
+
+export type EliteExpert = {
+  name: string;
+  role: string;
+  certification: string;
+  regions: string;
+  experience: string;
+  image: string;
+};
+
+export const eliteExperts: EliteExpert[] = [
+  {
+    name: "JOHAN",
+    role: "Football Manager/Director",
+    certification: "UEFA Pro License",
+    regions: "Sweden, Denmark, Liberia & Hungary",
+    experience: "19 Years Exp",
+    image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=600&q=80",
+  },
+  {
+    name: "MARKO",
+    role: "Manager & Coach",
+    certification: "UEFA A, Youth Elite",
+    regions: "Malta",
+    experience: "10 Years Exp",
+    image: "https://images.unsplash.com/photo-1546961342-ea5f62d5a27b?w=600&q=80",
+  },
+  {
+    name: "PAUL",
+    role: "Coach & Scout",
+    certification: "UEFA Pro License",
+    regions: "Romania",
+    experience: "12 Years Exp",
+    image: "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&q=80",
+  },
+  {
+    name: "AJITHKUMAR B.",
+    role: "Coach",
+    certification: "AIFF D, AFC B, FA Level-1",
+    regions: "India",
+    experience: "9+ Years Exp",
+    image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?w=600&q=80",
   },
 ];

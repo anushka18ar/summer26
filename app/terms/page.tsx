@@ -45,33 +45,40 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-white pt-20">
-      <section className="relative py-20 lg:py-28 overflow-hidden border-b border-slate-200">
+    <div className="min-h-screen pt-20" style={{ background: "#0a0a0b" }}>
+      <section
+        className="relative py-20 lg:py-28 overflow-hidden border-b"
+        style={{ borderColor: "rgba(255,255,255,0.05)" }}
+      >
         <div className="absolute inset-0 grid-bg opacity-40" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="badge badge-white mb-4 inline-flex">LEGAL</span>
-          <h1 className="font-display font-black text-[clamp(40px,6vw,80px)] uppercase leading-[0.9] mb-4 text-slate-900">
+          <span className="badge badge-red mb-4 inline-flex">LEGAL</span>
+          <h1 className="font-display font-black text-[clamp(40px,6vw,80px)] uppercase leading-[0.9] mb-4 text-white">
             TERMS<br />
             <span className="text-primary italic">OF USE</span>
           </h1>
-          <p className="text-slate-600">Please read these terms carefully</p>
+          <p className="text-slate-400">Please read these terms carefully</p>
         </div>
       </section>
 
-      <section className="py-16 lg:py-20 bg-slate-50">
+      <section className="py-16 lg:py-20" style={{ background: "#111114" }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
             {sections.map((section, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-card">
+              <div
+                key={i}
+                className="rounded-2xl p-6 sm:p-8 border border-white/8"
+                style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
+              >
                 <h2 className="font-display font-black text-lg uppercase text-primary mb-4">{section.title}</h2>
                 {section.content.split("\n\n").map((para, j) => (
-                  <p key={j} className="text-slate-600 text-sm leading-relaxed mb-3 last:mb-0 whitespace-pre-line">{para}</p>
+                  <p key={j} className="text-slate-400 text-sm leading-relaxed mb-3 last:mb-0 whitespace-pre-line">{para}</p>
                 ))}
               </div>
             ))}
           </div>
           <div className="mt-12 text-center">
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-500 text-sm">
               By using Outceedo, you agree to these Terms.{" "}
               <Link href="/privacy" className="text-primary hover:underline">View Privacy Policy</Link>
             </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -13,28 +13,21 @@ import {
   useMotionValue,
   type MotionValue,
 } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
-  const [gateReleased, setGateReleased] = useState(false);
 
-  // ── Scroll: hero-relative progress (0→1) for the 720° scroll rotation ──
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
-  // ── Scroll: global pixels for velocity (formula needs px/s, not 0-1) ──
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, { stiffness: 100, damping: 20 });
 
-  // ── Rotation: baseRotation (continuous) + scrollRotation (scroll-driven) ──
   const baseRotation = useMotionValue(0);
   const scrollRotation = useTransform(scrollYProgress, [0, 1], [0, 720]);
 
-  // Combine both without React re-renders (MotionValue only)
   const totalRotation = useTransform(
     [baseRotation, scrollRotation] as MotionValue<number>[],
     ([base, scroll]: number[]) => base + scroll,
@@ -46,12 +39,6 @@ export default function Hero() {
     baseRotation.set(baseRotation.get() + speed * (delta / 16.67));
   });
 
-  // ── Gate: release once user has scrolled far enough for 2 full rotations ──
-  useEffect(() => {
-    return scrollYProgress.on("change", (v) => {
-      if (v >= 0.99) setGateReleased(true);
-    });
-  }, [scrollYProgress]);
 
   return (
     <section
@@ -59,10 +46,21 @@ export default function Hero() {
       className="relative overflow-hidden min-h-screen flex items-center"
       style={{
         background:
-          "radial-gradient(ellipse at 60% 50%, rgba(239,68,68,0.08) 0%, transparent 60%), linear-gradient(180deg, #f9fafb 0%, #ffffff 100%)",
+          "radial-gradient(ellipse at 60% 50%, rgba(239,68,68,0.15) 0%, transparent 60%), linear-gradient(180deg, #0a0a0b 0%, #111114 100%)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full py-32">
+      {/* Subtle noise grain overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          opacity: 0.03,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "128px 128px",
+        }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center min-h-screen">
 
           {/* ── Left column ── */}
@@ -75,13 +73,13 @@ export default function Hero() {
               transition={{ delay: 0.1, duration: 0.5 }}
               className="mb-6"
             >
-              <span className="border border-gray-200 rounded-full px-4 py-2 text-xs uppercase tracking-widest text-gray-500 inline-flex items-center gap-2">
+              <span className="border border-white/10 rounded-full px-4 py-2 text-xs uppercase tracking-widest text-slate-500 inline-flex items-center gap-2 bg-white/5">
                 <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                 OUTDO YOUR SPORT TO SUCCEED
               </span>
             </motion.div>
 
-            {/* H1 — three individually animated lines */}
+            {/* H1 */}
             <h1
               className="font-display font-black uppercase tracking-tight"
               style={{ fontSize: "clamp(44px, 6vw, 84px)", lineHeight: "0.95" }}
@@ -90,13 +88,11 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className="text-slate-900"
+                className="text-white"
               >
                 FROM GRASSROOTS
               </motion.div>
 
-              {/* Shimmer line needs its own line-height + overflow-visible so
-                  background-clip: text is never cut off at the container edge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -111,7 +107,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-slate-900"
+                className="text-white"
               >
                 FOOTBALL.
               </motion.div>
@@ -122,7 +118,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="text-lg text-slate-500 leading-relaxed max-w-lg mt-6 mx-auto lg:mx-0"
+              className="text-lg text-slate-400 leading-relaxed max-w-lg mt-6 mx-auto lg:mx-0"
             >
               The premier ecosystem connecting rising football stars with world-class coaches, scouts, and performance experts.
             </motion.p>
@@ -136,11 +132,11 @@ export default function Hero() {
             >
               <Link
                 href="/signup"
-                className="bg-red-500 text-white rounded-full px-8 py-4 text-sm font-semibold hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/30 transition-all"
+                className="bg-red-500 text-white rounded-full px-8 py-4 text-sm font-semibold hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/40 transition-all focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0b]"
               >
                 Book an Assessment
               </Link>
-              <button className="bg-white border-2 border-gray-200 rounded-full px-8 py-4 text-sm font-semibold hover:border-gray-400 transition-all">
+              <button className="bg-white/5 border border-white/20 text-white rounded-full px-8 py-4 text-sm font-semibold hover:bg-white/10 hover:border-white/30 transition-all">
                 Watch Story
               </button>
             </motion.div>
@@ -161,22 +157,23 @@ export default function Hero() {
                 style={{
                   width: 420,
                   height: 420,
-                  background: "radial-gradient(circle, rgba(239,68,68,0.15) 0%, transparent 70%)",
+                  background: "radial-gradient(circle, rgba(239,68,68,0.2) 0%, transparent 70%)",
                 }}
               />
 
-              {/* Floating wrapper — y oscillation synced with ground shadow */}
+              {/* Floating wrapper */}
               <motion.div
                 animate={{ y: [0, -20, 0] }}
                 transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
                 className="relative z-10"
               >
-                {/* Rotation wrapper — rotateZ only, directional shadow (no halo) */}
+                {/* Rotation wrapper — rotateZ only, directional + red glow shadow */}
                 <motion.div
                   style={{
                     rotateZ: totalRotation,
                     backfaceVisibility: "hidden",
-                    filter: "drop-shadow(8px 16px 12px rgba(0,0,0,0.28)) drop-shadow(0px 4px 6px rgba(0,0,0,0.18))",
+                    filter:
+                      "drop-shadow(0px 40px 80px rgba(239,68,68,0.2)) drop-shadow(0px 20px 40px rgba(0,0,0,0.6)) drop-shadow(8px 16px 12px rgba(0,0,0,0.35))",
                   }}
                   className="relative w-[280px] h-[280px] lg:w-[420px] lg:h-[420px]"
                 >
@@ -192,32 +189,15 @@ export default function Hero() {
                 </motion.div>
               </motion.div>
 
-              {/* Ground shadow — scale/opacity inverse to float (ball up → shadow shrinks) */}
+              {/* Ground shadow */}
               <motion.div
-                animate={{ scale: [0.8, 1, 0.8], opacity: [0.6, 1, 0.6] }}
+                animate={{ scale: [0.8, 1, 0.8], opacity: [0.4, 0.7, 0.4] }}
                 transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                className="w-3/4 h-6 mx-auto rounded-full bg-black/20 blur-xl"
+                className="w-3/4 h-6 mx-auto rounded-full bg-black/40 blur-xl"
                 style={{ marginTop: "-10px" }}
               />
             </div>
 
-            {/* Scroll-to-continue hint — desktop only, fades when gate releases */}
-            <motion.div
-              animate={{ opacity: gateReleased ? 0 : 1 }}
-              transition={{ duration: 0.5 }}
-              className="hidden lg:flex flex-col items-center gap-2 mt-8"
-            >
-              <span className="text-xs uppercase tracking-[0.2em] text-gray-400">
-                Scroll to Continue
-              </span>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                className="text-gray-400"
-              >
-                <ChevronDown size={16} />
-              </motion.div>
-            </motion.div>
           </motion.div>
 
         </div>

@@ -90,7 +90,7 @@ export default function FootballAnimation() {
 
   return (
     /* 280vh of scroll space; the stage stays pinned for its duration */
-    <div ref={containerRef} className="relative bg-white" style={{ height: "280vh" }}>
+    <div ref={containerRef} className="relative" style={{ height: "280vh", background: "#0a0a0b" }}>
       <div
         ref={stageRef}
         className="sticky top-0 h-screen overflow-hidden bg-[#050505] flex items-center justify-center"

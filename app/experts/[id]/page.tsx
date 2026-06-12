@@ -18,12 +18,12 @@ export default function ExpertProfilePage({ params }: Props) {
   const similar = experts.filter((e) => e.id !== expert.id).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-white pt-20 pb-20">
+    <div className="min-h-screen pt-20 pb-20" style={{ background: "#0a0a0b" }}>
       {/* Hero cover */}
       <div className="relative h-72 lg:h-96 overflow-hidden">
         <Image src={expert.image} alt={expert.name} fill className="object-cover object-top" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-transparent to-white" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-[#0a0a0b]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 lg:-mt-48 relative">
@@ -35,10 +35,14 @@ export default function ExpertProfilePage({ params }: Props) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-white rounded-2xl p-6 sm:p-8 mb-6 border border-slate-200 shadow-card"
+              className="rounded-2xl p-6 sm:p-8 mb-6 border border-white/8"
+              style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
             >
               <div className="flex items-start gap-5 mb-6">
-                <div className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-2xl overflow-hidden border-2 border-slate-200 shrink-0">
+                <div
+                  className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-2xl overflow-hidden border-2 shrink-0"
+                  style={{ borderColor: "rgba(255,255,255,0.1)" }}
+                >
                   <Image src={expert.image} alt={expert.name} fill className="object-cover object-top" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -47,8 +51,8 @@ export default function ExpertProfilePage({ params }: Props) {
                     <span className="text-xl">{expert.flag}</span>
                     <span className="text-sm text-slate-500">{expert.nationality}</span>
                   </div>
-                  <h1 className="font-bold text-2xl lg:text-3xl text-slate-900 mb-1">{expert.name}</h1>
-                  <p className="text-slate-600 text-sm">{expert.title}</p>
+                  <h1 className="font-bold text-2xl lg:text-3xl text-white mb-1">{expert.name}</h1>
+                  <p className="text-slate-400 text-sm">{expert.title}</p>
                 </div>
               </div>
 
@@ -60,33 +64,37 @@ export default function ExpertProfilePage({ params }: Props) {
                   { icon: Calendar, value: `${expert.experience}yr`, label: "Experience" },
                   { icon: Globe, value: expert.languages.length.toString(), label: "Languages" },
                 ].map((stat) => (
-                  <div key={stat.label} className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200 hover:-translate-y-0.5 transition-transform">
+                  <div
+                    key={stat.label}
+                    className="rounded-xl p-4 text-center border hover:-translate-y-0.5 transition-transform"
+                    style={{ background: "#1c1c22", borderColor: "rgba(255,255,255,0.06)" }}
+                  >
                     <stat.icon size={14} className="text-primary mx-auto mb-1.5" />
                     <div className="font-display font-black text-xl text-primary">{stat.value}</div>
-                    <div className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">{stat.label}</div>
+                    <div className="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">{stat.label}</div>
                   </div>
                 ))}
               </div>
 
               {[
                 { title: "SPECIALIZATIONS", content: <div className="flex flex-wrap gap-2">{expert.specializations.map((s) => <span key={s} className="badge badge-red text-[11px]">{s}</span>)}</div> },
-                { title: "ABOUT", content: <p className="text-slate-600 text-[15px] leading-[1.75]">{expert.bio}</p> },
-                { title: "CLUBS & ACADEMIES", content: <div className="flex flex-wrap gap-2">{expert.clubs.map((c) => <span key={c} className="badge badge-white text-[11px]">{c}</span>)}</div> },
+                { title: "ABOUT", content: <p className="text-slate-400 text-[15px] leading-[1.75]">{expert.bio}</p> },
+                { title: "CLUBS & ACADEMIES", content: <div className="flex flex-wrap gap-2">{expert.clubs.map((c) => <span key={c} className="px-2.5 py-1 rounded-lg text-[11px] font-semibold border border-white/10 text-slate-400" style={{ background: "rgba(255,255,255,0.04)" }}>{c}</span>)}</div> },
                 {
                   title: "ACHIEVEMENTS", content: (
                     <ul className="space-y-2">
                       {expert.achievements.map((a) => (
-                        <li key={a} className="flex items-center gap-3 text-sm text-slate-600">
+                        <li key={a} className="flex items-center gap-3 text-sm text-slate-400">
                           <Award size={13} className="text-amber-500 shrink-0" /> {a}
                         </li>
                       ))}
                     </ul>
                   )
                 },
-                { title: "LANGUAGES", content: <div className="flex flex-wrap gap-2">{expert.languages.map((l) => <span key={l} className="badge badge-white text-[11px]">{l}</span>)}</div> },
+                { title: "LANGUAGES", content: <div className="flex flex-wrap gap-2">{expert.languages.map((l) => <span key={l} className="px-2.5 py-1 rounded-lg text-[11px] font-semibold border border-white/10 text-slate-400" style={{ background: "rgba(255,255,255,0.04)" }}>{l}</span>)}</div> },
               ].map(({ title, content }) => (
                 <div key={title} className="mb-6">
-                  <h3 className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-400 mb-4">{title}</h3>
+                  <h3 className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500 mb-4">{title}</h3>
                   {content}
                 </div>
               ))}
@@ -97,29 +105,34 @@ export default function ExpertProfilePage({ params }: Props) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-card"
+              className="rounded-2xl p-6 sm:p-8 border border-white/8"
+              style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-display font-black text-2xl uppercase text-slate-900">REVIEWS</h2>
+                <h2 className="font-display font-black text-2xl uppercase text-white">REVIEWS</h2>
                 <div className="flex items-center gap-2">
                   <div className="flex text-amber-400">
                     {[...Array(5)].map((_, j) => <Star key={j} size={14} fill={j < Math.floor(expert.rating) ? "currentColor" : "none"} />)}
                   </div>
-                  <span className="font-bold text-slate-900">{expert.rating}</span>
+                  <span className="font-bold text-white">{expert.rating}</span>
                   <span className="text-slate-500 text-sm">({expert.reviews})</span>
                 </div>
               </div>
               <div className="space-y-5">
                 {expert.reviewList.map((review, i) => (
-                  <div key={i} className="bg-slate-50 rounded-xl p-5 border border-slate-100">
+                  <div
+                    key={i}
+                    className="rounded-xl p-5 border"
+                    style={{ background: "#1c1c22", borderColor: "rgba(255,255,255,0.06)" }}
+                  >
                     <div className="flex items-start gap-3 mb-3">
                       <div className="relative w-9 h-9 rounded-full overflow-hidden shrink-0">
                         <Image src={review.avatar} alt={review.author} fill className="object-cover" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="font-semibold text-slate-900 text-sm">{review.author}</span>
-                          <span className="text-xs text-slate-400">{review.date}</span>
+                          <span className="font-semibold text-white text-sm">{review.author}</span>
+                          <span className="text-xs text-slate-500">{review.date}</span>
                         </div>
                         <span className="text-xs text-slate-500">{review.country}</span>
                       </div>
@@ -127,7 +140,7 @@ export default function ExpertProfilePage({ params }: Props) {
                     <div className="flex text-amber-400 mb-2">
                       {[...Array(5)].map((_, j) => <Star key={j} size={11} fill={j < review.rating ? "currentColor" : "none"} />)}
                     </div>
-                    <p className="text-slate-600 text-[14px] leading-[1.75]">{review.text}</p>
+                    <p className="text-slate-400 text-[14px] leading-[1.75]">{review.text}</p>
                   </div>
                 ))}
               </div>
@@ -140,7 +153,8 @@ export default function ExpertProfilePage({ params }: Props) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15, duration: 0.6 }}
-              className="bg-white rounded-2xl p-6 mb-6 border-2 border-red-100 shadow-card"
+              className="rounded-2xl p-6 mb-6 border border-primary/30"
+              style={{ background: "linear-gradient(135deg, #1a0c0e 0%, #15151a 100%)", boxShadow: "0 0 40px rgba(239,68,68,0.08)" }}
             >
               <div className="mb-5">
                 <span className="text-slate-500 text-xs uppercase tracking-widest">From</span>
@@ -150,16 +164,19 @@ export default function ExpertProfilePage({ params }: Props) {
               <Link href="/signup" className="btn-primary w-full justify-center mb-3 flex items-center gap-2">
                 Book Session <ArrowRight size={14} />
               </Link>
-              <button className="w-full py-3.5 rounded-xl border border-slate-200 text-slate-700 font-bold text-sm hover:border-slate-300 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 mb-6">
+              <button
+                className="w-full py-3.5 rounded-xl border font-bold text-sm hover:border-white/20 hover:bg-white/5 transition-all flex items-center justify-center gap-2 mb-6 text-slate-400"
+                style={{ borderColor: "rgba(255,255,255,0.1)" }}
+              >
                 <MessageSquare size={14} /> Free Discovery Call
               </button>
-              <div className="space-y-3 border-t border-slate-100 pt-5">
+              <div className="space-y-3 border-t pt-5" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
                 {[
                   { icon: Shield, text: "Verified & background-checked" },
                   { icon: Video, text: "Remote 1-on-1 sessions" },
                   { icon: Award, text: "Certified professional" },
                 ].map(({ icon: Icon, text }) => (
-                  <div key={text} className="flex items-center gap-3 text-xs text-slate-600">
+                  <div key={text} className="flex items-center gap-3 text-xs text-slate-400">
                     <Icon size={13} className="text-primary shrink-0" /> {text}
                   </div>
                 ))}
@@ -167,17 +184,20 @@ export default function ExpertProfilePage({ params }: Props) {
             </motion.div>
 
             {/* Similar experts */}
-            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-card">
-              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">MORE EXPERTS</h3>
+            <div
+              className="rounded-2xl p-5 border border-white/8"
+              style={{ background: "#15151a" }}
+            >
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">MORE EXPERTS</h3>
               <div className="space-y-3">
                 {similar.map((e) => (
                   <Link key={e.id} href={`/experts/${e.id}`}>
-                    <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                    <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors">
                       <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0">
                         <Image src={e.image} alt={e.name} fill className="object-cover object-top" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-slate-900 text-sm truncate">{e.name}</div>
+                        <div className="font-semibold text-white text-sm truncate">{e.name}</div>
                         <div className="text-xs text-slate-500 truncate">{e.title}</div>
                       </div>
                       <div className="text-xs font-bold text-primary shrink-0">£{e.price}</div>

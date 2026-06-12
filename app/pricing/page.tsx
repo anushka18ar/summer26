@@ -58,10 +58,10 @@ export default function PricingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen pt-20" style={{ background: "#0a0a0b" }}>
 
       {/* Hero */}
-      <section className="relative py-24 lg:py-28 overflow-hidden bg-white">
+      <section className="relative py-24 lg:py-28 overflow-hidden" style={{ background: "#0a0a0b" }}>
         <div className="absolute inset-0 grid-bg opacity-50" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -71,7 +71,7 @@ export default function PricingPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display font-black text-[clamp(48px,7vw,90px)] uppercase leading-[0.9] mb-4 text-slate-900"
+            className="font-display font-black text-[clamp(48px,7vw,90px)] uppercase leading-none mb-4 text-white"
           >
             CHOOSE YOUR <span className="text-primary italic">LEVEL.</span>
           </motion.h1>
@@ -79,7 +79,7 @@ export default function PricingPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35 }}
-            className="text-slate-600 text-lg max-w-xl mx-auto"
+            className="text-slate-400 text-lg max-w-xl mx-auto"
           >
             Start your journey for free or unlock the full tactical ecosystem to accelerate your professional career.
           </motion.p>
@@ -87,15 +87,15 @@ export default function PricingPage() {
       </section>
 
       {/* Toggle */}
-      <div className="flex items-center justify-center gap-4 mb-12 -mt-4">
-        <span className={`text-sm font-bold ${billing === "monthly" ? "text-slate-900" : "text-slate-400"}`}>Monthly</span>
+      <div className="flex items-center justify-center gap-6 pt-8 mb-12">
+        <span className={`text-sm font-bold ${billing === "monthly" ? "text-white" : "text-slate-500"}`}>Monthly</span>
         <button
           onClick={() => setBilling(billing === "monthly" ? "annual" : "monthly")}
-          className={`w-12 h-6 rounded-full transition-colors relative ${billing === "annual" ? "bg-primary" : "bg-slate-200"}`}
+          className={`w-14 h-7 rounded-full transition-colors relative overflow-hidden ${billing === "annual" ? "bg-primary" : "bg-white/10"}`}
         >
-          <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${billing === "annual" ? "translate-x-7" : "translate-x-1"}`} />
+          <span className={`absolute top-1 left-0 w-5 h-5 rounded-full bg-white shadow transition-transform ${billing === "annual" ? "translate-x-7" : "translate-x-1"}`} />
         </button>
-        <span className={`text-sm font-bold flex items-center gap-2 ${billing === "annual" ? "text-slate-900" : "text-slate-400"}`}>
+        <span className={`text-sm font-bold flex items-center gap-2 ${billing === "annual" ? "text-white" : "text-slate-500"}`}>
           Annually <span className="badge badge-red">SAVE 17%</span>
         </span>
       </div>
@@ -109,28 +109,35 @@ export default function PricingPage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-white rounded-2xl border border-slate-200 p-8 shadow-card"
+              className="rounded-2xl border border-white/8 p-8 flex flex-col"
+              style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
             >
               <div className="mb-6">
-                <h3 className="font-display font-black text-2xl uppercase text-slate-900">Basic</h3>
+                <h3 className="font-display font-black text-2xl uppercase text-white">Basic</h3>
                 <p className="text-slate-500 text-sm">Get Started Free</p>
               </div>
               <div className="mb-6">
-                <span className="font-display font-black text-5xl text-slate-900">£0</span>
+                <span className="font-display font-black text-5xl text-white">£0</span>
                 <span className="text-slate-500 text-sm">/mo</span>
-                <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Free Forever</div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">Free Forever</div>
               </div>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 mb-8 flex-1">
                 {basicFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-slate-600">
-                    <div className="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
-                      <Check size={10} className="text-slate-400" />
+                  <li key={f} className="flex items-center gap-3 text-sm text-slate-400 line-through decoration-white/20">
+                    <div
+                      className="w-5 h-5 rounded-full border flex items-center justify-center shrink-0"
+                      style={{ background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.1)" }}
+                    >
+                      <Check size={10} className="text-slate-600" />
                     </div>
-                    {f}
+                    <span className="no-underline text-white/30">{f}</span>
                   </li>
                 ))}
               </ul>
-              <Link href="/signup" className="btn-secondary w-full justify-center flex">Get Started</Link>
+              <div className="mt-auto">
+                <div className="h-6" />
+                <Link href="/signup" className="btn-secondary w-full justify-center flex">Get Started</Link>
+              </div>
             </motion.div>
 
             {/* Premium */}
@@ -138,28 +145,28 @@ export default function PricingPage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
-              className="bg-white rounded-2xl border-2 border-primary p-8 relative"
-              style={{ boxShadow: "var(--shadow-red-glow)" }}
+              className="rounded-2xl border-2 border-primary p-8 relative flex flex-col"
+              style={{ background: "linear-gradient(135deg, #1a0c0e 0%, #15151a 100%)", boxShadow: "0 0 60px rgba(239,68,68,0.15)" }}
             >
-              <div className="absolute -top-3 right-6">
-                <span className="badge badge-red">BEST VALUE</span>
-              </div>
               <div className="mb-6">
-                <h3 className="font-display font-black text-2xl uppercase text-slate-900">Premium</h3>
-                <p className="text-slate-500 text-sm">Unlock Everything</p>
+                <div className="flex items-center gap-3 mb-1">
+                  <h3 className="font-display font-black text-2xl uppercase text-white">Premium</h3>
+                  <span className="badge badge-red">BEST VALUE</span>
+                </div>
+                <p className="text-slate-400 text-sm">Unlock Everything</p>
               </div>
               <div className="mb-6">
                 <span className="font-display font-black text-5xl text-primary">
                   £{billing === "monthly" ? "10" : "100"}
                 </span>
-                <span className="text-slate-500 text-sm">/mo</span>
-                <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">
+                <span className="text-slate-400 text-sm">/mo</span>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
                   {billing === "monthly" ? "Billed Monthly" : "Billed Annually — Save £20"}
                 </div>
               </div>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 mb-8 flex-1">
                 {premiumFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-slate-700">
+                  <li key={f} className="flex items-center gap-3 text-sm text-white">
                     <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0">
                       <Check size={10} className="text-white" />
                     </div>
@@ -167,33 +174,39 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/signup" className="btn-primary w-full justify-center flex">Upgrade to Premium</Link>
-              <p className="text-center text-xs text-slate-400 mt-3">Full Access to All Features</p>
+              <div className="mt-auto">
+                <p className="text-center text-xs text-slate-400 mb-3">Full Access to All Features</p>
+                <Link href="/signup" className="btn-primary w-full justify-center flex">Upgrade to Premium</Link>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="bg-slate-50 border-t border-slate-200 py-24 lg:py-32">
+      <section className="border-t py-24 lg:py-32" style={{ background: "#111114", borderColor: "rgba(255,255,255,0.05)" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="section-label mb-5 justify-center">HAVE QUESTIONS?</div>
-            <h2 className="font-display font-black text-[clamp(32px,4vw,52px)] uppercase leading-[0.9] text-slate-900">
+            <h2 className="font-display font-black text-[clamp(32px,4vw,52px)] uppercase leading-none text-white">
               FREQUENTLY ASKED <span className="text-primary italic">QUESTIONS</span>
             </h2>
           </div>
           <div className="space-y-3">
             {faqs.map((faq, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+              <div
+                key={i}
+                className="rounded-2xl border overflow-hidden"
+                style={{ background: "#15151a", borderColor: "rgba(255,255,255,0.08)" }}
+              >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-6 text-left"
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-white/3 transition-colors"
                 >
-                  <span className="font-semibold text-slate-900 text-sm pr-4">{faq.q}</span>
+                  <span className="font-semibold text-white text-sm pr-4">{faq.q}</span>
                   <ChevronDown
                     size={16}
-                    className={`text-slate-400 shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`}
+                    className={`text-slate-500 shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`}
                   />
                 </button>
                 <AnimatePresence>
@@ -205,7 +218,7 @@ export default function PricingPage() {
                       transition={{ duration: 0.25 }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-6 text-sm text-slate-600 leading-relaxed">{faq.a}</p>
+                      <p className="px-6 pb-6 text-sm text-slate-400 leading-relaxed">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

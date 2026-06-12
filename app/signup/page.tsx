@@ -37,15 +37,15 @@ export default function SignupPage() {
 
   if (done) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-white">
+      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#0a0a0b" }}>
         <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} className="text-center max-w-md">
-          <div className="w-20 h-20 rounded-full bg-red-50 border-2 border-primary flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-primary flex items-center justify-center mx-auto mb-6">
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
               <Check size={32} className="text-primary" />
             </motion.div>
           </div>
           <h2 className="font-display font-black text-4xl uppercase mb-3 text-primary italic">WELCOME.</h2>
-          <p className="text-slate-600 mb-8">Your account has been created. Time to start your journey.</p>
+          <p className="text-slate-400 mb-8">Your account has been created. Time to start your journey.</p>
           <Link href="/login" className="btn-primary inline-flex items-center gap-2">
             Login to Outceedo <ArrowRight size={16} />
           </Link>
@@ -55,11 +55,11 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white pt-20 pb-12">
-      <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
+    <div className="min-h-screen pt-20 pb-12" style={{ background: "#0a0a0b" }}>
+      <div className="absolute inset-0 grid-bg pointer-events-none" />
 
       <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors mb-8 mt-4">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors mb-8 mt-4">
           <ArrowLeft size={14} /> Go Back
         </Link>
 
@@ -69,14 +69,14 @@ export default function SignupPage() {
             <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
               <span className="font-display font-black text-white text-base">O</span>
             </div>
-            <span className="font-display font-black text-xl text-slate-900">
+            <span className="font-display font-black text-xl text-white">
               OUT<span className="text-primary">CEEDO</span>
             </span>
           </div>
-          <h1 className="font-display font-black text-[clamp(40px,6vw,72px)] uppercase leading-[0.9] mb-3 text-slate-900">
+          <h1 className="font-display font-black text-[clamp(40px,6vw,72px)] uppercase leading-[0.9] mb-3 text-white">
             <span className="text-primary italic">JOIN THE</span><br />ELITE.
           </h1>
-          <p className="text-slate-600">An online platform where football players connect with experts to get assessed.</p>
+          <p className="text-slate-400">An online platform where football players connect with experts to get assessed.</p>
         </div>
 
         {/* Step indicator */}
@@ -84,12 +84,12 @@ export default function SignupPage() {
           {STEPS.map((s, i) => (
             <div key={s} className="flex items-center">
               <div className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold transition-all ${
-                i < step ? "bg-primary text-white" : i === step ? "bg-primary text-white" : "bg-slate-100 text-slate-400 border border-slate-200"
+                i < step ? "bg-primary text-white" : i === step ? "bg-primary text-white" : "bg-white/5 text-slate-500 border border-white/10"
               }`}>
                 {i < step ? <Check size={12} /> : i + 1}
               </div>
-              <span className={`hidden sm:block ml-2 mr-4 text-xs font-semibold uppercase tracking-wider ${i === step ? "text-slate-900" : "text-slate-400"}`}>{s}</span>
-              {i < STEPS.length - 1 && <div className={`h-px w-8 sm:w-12 mx-2 ${i < step ? "bg-primary" : "bg-slate-200"}`} />}
+              <span className={`hidden sm:block ml-2 mr-4 text-xs font-semibold uppercase tracking-wider ${i === step ? "text-white" : "text-slate-500"}`}>{s}</span>
+              {i < STEPS.length - 1 && <div className={`h-px w-8 sm:w-12 mx-2 ${i < step ? "bg-primary" : "bg-white/10"}`} />}
             </div>
           ))}
         </div>
@@ -97,8 +97,11 @@ export default function SignupPage() {
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div key="step0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-card mb-6">
-                <h3 className="font-display font-black text-xl uppercase text-slate-900 mb-2">SELECT YOUR ROLE</h3>
+              <div
+                className="rounded-2xl border border-white/8 p-6 sm:p-8 mb-6"
+                style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
+              >
+                <h3 className="font-display font-black text-xl uppercase text-white mb-2">SELECT YOUR ROLE</h3>
                 <p className="text-sm text-slate-500 mb-6">REGISTERING AS:</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {roles.map((r) => (
@@ -106,10 +109,12 @@ export default function SignupPage() {
                       key={r.id}
                       onClick={() => setRole(r.id)}
                       className={`p-4 rounded-xl border text-left transition-all duration-200 ${
-                        role === r.id ? "border-primary bg-red-50" : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                        role === r.id
+                          ? "border-primary bg-red-500/10"
+                          : "border-white/8 bg-white/3 hover:border-white/15 hover:bg-white/5"
                       }`}
                     >
-                      <div className={`font-display font-black text-sm uppercase tracking-wide mb-1 ${role === r.id ? "text-primary" : "text-slate-800"}`}>{r.label}</div>
+                      <div className={`font-display font-black text-sm uppercase tracking-wide mb-1 ${role === r.id ? "text-primary" : "text-white"}`}>{r.label}</div>
                       <div className="text-[11px] text-slate-500 leading-snug">{r.desc}</div>
                     </button>
                   ))}
@@ -120,7 +125,10 @@ export default function SignupPage() {
 
           {step === 1 && (
             <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-card mb-6 space-y-5">
+              <div
+                className="rounded-2xl border border-white/8 p-6 sm:p-8 mb-6 space-y-5"
+                style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
+              >
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">FIRST NAME <span className="text-primary">*</span></label>
@@ -143,7 +151,7 @@ export default function SignupPage() {
                   <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">PASSWORD <span className="text-primary">*</span></label>
                   <div className="relative">
                     <input type={showPass ? "text" : "password"} className="input-field pr-12" placeholder="Min 8 chars, 1 uppercase, 1 number, 1 symbol" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors">
                       {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
@@ -172,19 +180,19 @@ export default function SignupPage() {
                 <div className="space-y-3 pt-2">
                   <label className="flex items-start gap-3 cursor-pointer">
                     <button type="button" onClick={() => setForm({ ...form, age18: !form.age18 })}
-                      className={`w-5 h-5 rounded flex items-center justify-center border transition-all shrink-0 mt-0.5 ${form.age18 ? "bg-primary border-primary" : "border-slate-300 bg-white"}`}>
+                      className={`w-5 h-5 rounded flex items-center justify-center border transition-all shrink-0 mt-0.5 ${form.age18 ? "bg-primary border-primary" : "border-white/20 bg-white/5"}`}>
                       {form.age18 && <Check size={11} className="text-white" />}
                     </button>
-                    <span className="text-xs text-slate-600 leading-snug">
-                      I AM 18 YEARS OR OLDER <span className="block text-slate-400">(Under 18: Parent or Guardian must sign up)</span>
+                    <span className="text-xs text-slate-400 leading-snug">
+                      I AM 18 YEARS OR OLDER <span className="block text-slate-500">(Under 18: Parent or Guardian must sign up)</span>
                     </span>
                   </label>
                   <label className="flex items-start gap-3 cursor-pointer">
                     <button type="button" onClick={() => setForm({ ...form, terms: !form.terms })}
-                      className={`w-5 h-5 rounded flex items-center justify-center border transition-all shrink-0 mt-0.5 ${form.terms ? "bg-primary border-primary" : "border-slate-300 bg-white"}`}>
+                      className={`w-5 h-5 rounded flex items-center justify-center border transition-all shrink-0 mt-0.5 ${form.terms ? "bg-primary border-primary" : "border-white/20 bg-white/5"}`}>
                       {form.terms && <Check size={11} className="text-white" />}
                     </button>
-                    <span className="text-xs text-slate-600 leading-snug">
+                    <span className="text-xs text-slate-400 leading-snug">
                       I AGREE TO OUTCEEDO{" "}
                       <Link href="/terms" className="text-primary hover:underline">Terms and Conditions</Link>
                       {" "}AND{" "}
@@ -198,8 +206,11 @@ export default function SignupPage() {
 
           {step === 2 && (
             <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-card mb-6">
-                <h3 className="font-display font-black text-xl uppercase text-slate-900 mb-6">CONFIRM YOUR DETAILS</h3>
+              <div
+                className="rounded-2xl border border-white/8 p-6 sm:p-8 mb-6"
+                style={{ background: "#15151a", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)" }}
+              >
+                <h3 className="font-display font-black text-xl uppercase text-white mb-6">CONFIRM YOUR DETAILS</h3>
                 <div className="space-y-3">
                   {[
                     { label: "Role", value: role },
@@ -208,9 +219,9 @@ export default function SignupPage() {
                     { label: "Email", value: form.email },
                     { label: "Country", value: form.country || "—" },
                   ].map(({ label, value }) => (
-                    <div key={label} className="flex items-center justify-between py-3 border-b border-slate-100">
-                      <span className="text-xs font-bold uppercase tracking-widest text-slate-400">{label}</span>
-                      <span className="text-sm text-slate-900 font-medium">{value}</span>
+                    <div key={label} className="flex items-center justify-between py-3 border-b border-white/5">
+                      <span className="text-xs font-bold uppercase tracking-widest text-slate-500">{label}</span>
+                      <span className="text-sm text-white font-medium">{value}</span>
                     </div>
                   ))}
                 </div>
@@ -243,7 +254,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-slate-500 mt-6">
           ALREADY HAVE AN ACCOUNT?{" "}
-          <Link href="/login" className="text-primary hover:text-red-700 font-semibold">Login</Link>
+          <Link href="/login" className="text-primary hover:text-red-400 font-semibold transition-colors">Login</Link>
         </p>
       </div>
     </div>
